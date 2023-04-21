@@ -19,4 +19,3 @@ def getdata_hh():
     vacan_data.append(requests.get('https://api.hh.ru/vacancies', params).json())
     return vacan_data
 
-print(type(getdata_hh()))

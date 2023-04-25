@@ -6,6 +6,7 @@ def getdata_hh():
 
     # for n in range(1, 10):
     #     params = {
+    #         'employer_id': 113,
     #         'area': 113,  # Поиск в Ru зоне
     #         'page': n,    # Номер страницы
     #         'per_page': 100  # Кол-во вакансий на 1 странице

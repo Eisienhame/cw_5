@@ -5,3 +5,10 @@ CREATE TABLE vacancies
 	salary smallint,
 	link_vac varchar UNIQUE
 )
+
+CREATE TABLE employeers
+(
+	id_emp smallint PRIMARY KEY,
+	emp_name varchar UNIQUE,
+	vacancies int
+)

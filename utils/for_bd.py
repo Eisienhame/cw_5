@@ -18,6 +18,14 @@ def get_vacancies_in_table(id):
                         (e_id, e_name))
 
 get_vacancies_in_table(640251)
-# print(get_udated_list(869045))
-# for i in get_udated_list(869045):
-#     print(i)
+
+
+def refresh_tables():
+    with psycopg2.connect(
+            host="localhost",
+            database="cw_5_hh",
+            user="postgres",
+            password="12345678") as conn:
+        with conn.cursor() as cur:
+            cur.execute('truncate table vacancies')
+            cur.execute('truncate table employeers')

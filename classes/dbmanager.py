@@ -26,11 +26,14 @@ class DBManager():
             print(f'Название комании: {i[0]} \n Кол-во вакансий: {i[1]}')
             print('__________________________________________________')
 
-
     def get_all_vacancies(self):
         '''получает список всех вакансий с указанием названия компании,
          названия вакансии и зарплаты и ссылки на вакансию'''
-        pass
+        req = 'SELECT employeers.emp_name, vac_name, salary, link_vac FROM vacancies INNER JOIN employeers USING(id_emp) GROUP BY salary, link_vac, employeers.emp_name, vac_name ORDER BY employeers.emp_name, salary DESC'
+        data = self.connection(req)
+        for i in data:
+            print(f' Название комании: {i[0]} \n Название вакансии: {i[1]} \n Зарплата: {i[2]} \n Ссылка на вакансию: {i[3]}')
+            print('____________________________________________________________________')
     def get_avg_salary(self):
         'получает среднюю зарплату по вакансиям'
         pass
@@ -44,4 +47,4 @@ class DBManager():
 
 x = DBManager()
 #print(x.connection('SELECT * FROM employeers'))
-x.get_companies_and_vacancies_count()
+x.get_all_vacancies()

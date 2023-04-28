@@ -1,4 +1,4 @@
-import requests, json
+import requests, json, psycopg2
 
 def getdata_hh(id):
     '''Загружаем данные с ХХ в список'''
@@ -10,6 +10,7 @@ def getdata_hh(id):
     return vacan_data
 
 def get_udated_list(id):
+    'формируем список с нужными данными'
     work_dic_hh = []
     dic_hh = getdata_hh(id)
     for i in dic_hh:
@@ -35,3 +36,32 @@ def get_udated_list(id):
             work_dic_hh.append(next_item)
 
     return work_dic_hh
+
+def get_vacancies_in_table(id):
+    'из списка вгружаем данные в СОЗДАННЫЕ заранее таблицы'
+    data_for_bd = get_udated_list(id)
+    with psycopg2.connect(
+            host="localhost",
+            database="cw_5_hh",
+            user="postgres",
+            password="12345678") as conn:
+        with conn.cursor() as cur:
+            for row in data_for_bd:
+                cur.execute('INSERT INTO vacancies(id_vac, vac_name, salary, id_emp, link_vac)'
+                            'VALUES(%s, %s, %s, %s, %s)', (row["id_vac"], row["name"], row["salary"], row["id_emp"], row["url"]))
+                e_id = row["id_emp"]
+                e_name = row["emp_name"]
+            cur.execute('INSERT INTO employeers(id_emp, emp_name)'
+                        'VALUES(%s, %s)',
+                        (e_id, e_name))
+
+def refresh_tables():
+    'обнуляем данные в таблицах'
+    with psycopg2.connect(
+            host="localhost",
+            database="cw_5_hh",
+            user="postgres",
+            password="12345678") as conn:
+        with conn.cursor() as cur:
+            cur.execute('truncate table vacancies')
+            cur.execute('truncate table employeers')

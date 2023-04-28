@@ -1,8 +1,22 @@
-
-
+from abc import abstractmethod
+import psycopg2
 class DBManager():
-    pass
 
+    def __init__(self):
+
+        pass
+
+    @abstractmethod
+    def connection(self, rules:str):
+        with psycopg2.connect(
+                host="localhost",
+                database="cw_5_hh",
+                user="postgres",
+                password="12345678") as conn:
+            with conn.cursor() as cur:
+                cur.execute(rules)
+                records = cur.fetchall()
+            return records
     def get_companies_and_vacancies_count():
         'получает список всех компаний и количество вакансий у каждой компании.'
         pass
@@ -11,7 +25,7 @@ class DBManager():
         '''получает список всех вакансий с указанием названия компании,
          названия вакансии и зарплаты и ссылки на вакансию'''
         pass
-    def get_avg_salary()
+    def get_avg_salary():
         'получает среднюю зарплату по вакансиям'
         pass
 
@@ -21,3 +35,6 @@ class DBManager():
 
     def get_vacancies_with_keyword():
         'получает список всех вакансий, в названии которых содержатся переданные в метод слова, например “python”'
+
+x = DBManager()
+print(x.connection('SELECT * FROM employeers'))

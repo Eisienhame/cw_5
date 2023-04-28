@@ -2,10 +2,6 @@ from abc import abstractmethod
 import psycopg2
 class DBManager():
 
-    # def __init__(self):
-    #
-    #     pass
-
     @abstractmethod
     def connection(self, rules:str):
         'Подкл к бд и возвращает инфу по sql запросу'
@@ -56,7 +52,3 @@ class DBManager():
         for i in data:
             print(f' Название вакансии: {i[1]} \n Зарплата: {i[2]} \n Ссылка на вакансию: {i[4]}')
             print('____________________________________________________________________')
-
-x = DBManager()
-#print(x.connection('SELECT * FROM employeers'))
-x.get_vacancies_with_keyword('python')

@@ -43,11 +43,20 @@ class DBManager():
         return salary
     def get_vacancies_with_higher_salary(self):
         'получает список всех вакансий, у которых зарплата выше средней по всем вакансиям'
-        pass
+        req = 'SELECT vac_name, salary, link_vac FROM vacancies WHERE salary > (SELECT AVG(salary) FROM vacancies WHERE salary > 0) ORDER BY salary DESC, vac_name'
+        data = self.connection(req)
+        for i in data:
+            print(f' Название вакансии: {i[0]} \n Зарплата: {i[1]} \n Ссылка на вакансию: {i[2]}')
+            print('____________________________________________________________________')
 
-    def get_vacancies_with_keyword(self):
-        'получает список всех вакансий, в названии которых содержатся переданные в метод слова, например “python”'
+    def get_vacancies_with_keyword(self, keyword):
+        'получает список всех вакансий, в названии которых содержатся переданные в метод слова'
+        req = f"SELECT * FROM vacancies WHERE vac_name ILIKE '%{keyword}%' ORDER BY salary DESC"
+        data = self.connection(req)
+        for i in data:
+            print(f' Название вакансии: {i[1]} \n Зарплата: {i[2]} \n Ссылка на вакансию: {i[4]}')
+            print('____________________________________________________________________')
 
 x = DBManager()
 #print(x.connection('SELECT * FROM employeers'))
-print(x.get_avg_salary())
+x.get_vacancies_with_keyword('python')

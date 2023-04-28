@@ -63,5 +63,4 @@ def refresh_tables():
             user="postgres",
             password="12345678") as conn:
         with conn.cursor() as cur:
-            cur.execute('truncate table vacancies')
-            cur.execute('truncate table employeers')
+            cur.execute('truncate table vacancies, employeers')

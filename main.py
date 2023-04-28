@@ -1,8 +1,9 @@
-from utils.hh_api import get_vacancies_in_table, refresh_tables
+from utils.utils import get_vacancies_in_table, refresh_tables
 from classes.dbmanager import DBManager
 
+'обнуляем таблицу и вносим свежие данные'
 refresh_tables()
-emploeys = [2515455, 869045] # , 43140, 9790209, 8918357, 2354030, 46587, 8918357, 561525, 640251
+emploeys = [2515455, 869045, 43140, 9790209, 8918357, 2354030, 46587, 8918357, 561525, 640251]
 
 for i in emploeys:
     get_vacancies_in_table(i)
@@ -10,6 +11,8 @@ data = DBManager()
 
 main_exit = True  # ключи для более наглядного завершения программы
 menu_exit = True
+
+'Начало работы интерфейса'
 
 while main_exit is True:
     while menu_exit is True:

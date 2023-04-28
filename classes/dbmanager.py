@@ -36,8 +36,11 @@ class DBManager():
             print('____________________________________________________________________')
     def get_avg_salary(self):
         'получает среднюю зарплату по вакансиям'
-        pass
-
+        req = 'SELECT ROUND(AVG(salary)) as avg_salary FROM vacancies WHERE salary > 0'
+        data = self.connection(req)
+        x = str(data[0])
+        salary = int(''.join(filter(str.isdigit, x)))
+        return salary
     def get_vacancies_with_higher_salary(self):
         'получает список всех вакансий, у которых зарплата выше средней по всем вакансиям'
         pass
@@ -47,4 +50,4 @@ class DBManager():
 
 x = DBManager()
 #print(x.connection('SELECT * FROM employeers'))
-x.get_all_vacancies()
+print(x.get_avg_salary())

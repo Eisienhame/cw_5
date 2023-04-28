@@ -3,7 +3,7 @@ from classes.dbmanager import DBManager
 
 'обнуляем таблицу и вносим свежие данные'
 refresh_tables()
-emploeys = [2515455, 869045, 43140, 9790209, 8918357, 2354030, 46587, 8918357, 561525, 640251]
+emploeys = [2515455, 869045, 43140, 9790209, 8918357, 2354030, 46587, 561525, 640251, 1740]
 
 for i in emploeys:
     get_vacancies_in_table(i)

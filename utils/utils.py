@@ -1,4 +1,9 @@
-import requests, json, psycopg2, os
+import requests, json, psycopg2
+
+'берем пароль из файла конфига'
+with open("config.json", "r") as write_file:
+    data = json.load(write_file)
+    bd_pass = data['password']
 
 def getdata_hh(id):
     '''Загружаем данные с ХХ в список'''
@@ -44,7 +49,7 @@ def get_vacancies_in_table(id):
             host="localhost",
             database="cw_5_hh",
             user="postgres",
-            password="12345678") as conn:
+            password=f"{bd_pass}") as conn:
         with conn.cursor() as cur:
             for row in data_for_bd:
                 cur.execute('INSERT INTO vacancies(id_vac, vac_name, salary, id_emp, link_vac)'
@@ -61,9 +66,10 @@ def refresh_tables():
             host="localhost",
             database="cw_5_hh",
             user="postgres",
-            password="12345678") as conn:
+            password=f"{bd_pass}") as conn:
         with conn.cursor() as cur:
             cur.execute('truncate table vacancies, employeers')
+
 
 def create_table():
     'создадим таблицы'
@@ -71,9 +77,11 @@ def create_table():
             host="localhost",
             database="cw_5_hh",
             user="postgres",
-            password="bd_cw_5_pass") as conn:
+            password=f"{bd_pass}") as conn:
         with conn.cursor() as cur:
-            cur.execute('CREATE TABLE vacancies (id_vac int PRIMARY KEY, vac_name varchar NOT NULL,	salary int,	id_emp int NOT NULL, link_vac varchar UNIQUE)')
-            cur.execute('CREATE TABLE employeers (id_emp int PRIMARY KEY, emp_name varchar UNIQUE)')
+            try:
+                cur.execute('CREATE TABLE vacancies (id_vac int PRIMARY KEY, vac_name varchar NOT NULL,	salary int,	id_emp int NOT NULL, link_vac varchar UNIQUE)')
+                cur.execute('CREATE TABLE employeers (id_emp int PRIMARY KEY, emp_name varchar UNIQUE)')
+            except psycopg2.ProgrammingError as e:
+                pass
 
-create_table()

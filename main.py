@@ -1,7 +1,8 @@
-from utils.utils import get_vacancies_in_table, refresh_tables
+from utils.utils import get_vacancies_in_table, refresh_tables, create_table
 from classes.dbmanager import DBManager
 
-'обнуляем таблицу и вносим свежие данные'
+'создаем таблицу, если ее не было, обнуляем таблицу и вносим свежие данные'
+create_table()
 refresh_tables()
 emploeys = [2515455, 869045, 43140, 9790209, 8918357, 2354030, 46587, 561525, 640251, 1740]
 

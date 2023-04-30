@@ -1,4 +1,4 @@
-import requests, json, psycopg2
+import requests, json, psycopg2, os
 
 def getdata_hh(id):
     '''Загружаем данные с ХХ в список'''
@@ -64,3 +64,16 @@ def refresh_tables():
             password="12345678") as conn:
         with conn.cursor() as cur:
             cur.execute('truncate table vacancies, employeers')
+
+def create_table():
+    'создадим таблицы'
+    with psycopg2.connect(
+            host="localhost",
+            database="cw_5_hh",
+            user="postgres",
+            password=bd_cw_5_pass) as conn:
+        with conn.cursor() as cur:
+            cur.execute('CREATE TABLE vacancies (id_vac int PRIMARY KEY, vac_name varchar NOT NULL,	salary int,	id_emp int NOT NULL, link_vac varchar UNIQUE)')
+            cur.execute('CREATE TABLE employeers (id_emp int PRIMARY KEY, emp_name varchar UNIQUE)')
+
+create_table()
